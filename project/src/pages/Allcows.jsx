@@ -6,13 +6,17 @@ import axios from 'axios';
 
 
 function Home() {
-  const [allCows, setAllCows] = useState({});
+  const [allCows, setAllCows] = useState([]);
   useEffect(() => {
 
     async function fetchData() {
       try {
-        const response = await axios.get(("https://api.example.com/data"),);
+        const response = await axios.get(`http://localhost:4200/api/owners/67cea83ff2074d36eff08c10/cows`);
+        console.log(response.data);
+        
+       if(response.status == "200")
         setAllCows(response.data);
+      
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -28,8 +32,9 @@ function Home() {
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {cows.map((cow) => (
-            <CowCard key={cow.id} cow={cow} />
+        
+          {allCows.map((cow) => (
+            <CowCard key={cow._id} cow={cow} />
           ))}
         </div>
       </main>

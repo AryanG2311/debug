@@ -99,27 +99,35 @@ const RecommendationForm = () => {
 
   const onSubmit = async (data) => {
     try {
-      // Update the final form data
       updateFormData(currentStep);
-      
-      // Send formData to your backend
-      const response = await axios.post('http://localhost:4200/api/cows/add', {
-        ownerId: '60b9f4b3b3b3b30015b2b3b3',
-        name: 'Bessie',
-        tagNumber: '123456',
-        ...formData 
-      });
-
+  
+      const response =  axios.post(
+        "http://localhost:4200/api/cows/add",
+        {
+          ownerId: "67cea83ff2074d36eff08c10",
+          name: "cow5",
+          tagNumber: "43344",
+          ...formData,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,  // Ensure cookies are included if needed
+        }
+      );
+  
       if (response.status !== 201) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
-
-      toast.success('Form submitted successfully!');
+  
+      toast.success("Form submitted successfully!");
     } catch (error) {
-      toast.error('Failed to submit form. Please try again.');
-      console.error('Form submission error:', error);
+      toast.error("Failed to submit form. Please try again.");
+      console.error("Form submission error:", error);
     }
   };
+  
 
   const renderGeneticFactors = () => (
     <div className="space-y-6">

@@ -1,7 +1,7 @@
 import express from "express";
 import {Cow} from "../model/cow.model.js";
 import {Owner} from "../model/owner.model.js";
-
+import {generateBreedingRecommendation} from "../model/services/geminiService.js";  
 const router = express.Router();
 
 
@@ -46,5 +46,29 @@ router.post("/add", async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 });
+router.get("/:cowid/cows", async (req, res) => {
+    try {
+      const { cowid } = req.params;
+  
+      const cow = await Cow.findById(cowid);
+      if (!cow) {
+        return res.status(404).json({ message: "cow not found" });
+      }  
+      generateBreedingRecommendation(cow)
+      .then((recommendation) => {
+        res.status(200).json({ cow, recommendation });
+      })
+      .catch((error) => {
+        console.error(error);
+        res.status(500).json({ message: "Internal server error" });
+      });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  }
+  );
+ 
+
 
 export default router;

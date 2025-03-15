@@ -6,6 +6,7 @@ import Home from './pages/Home';
 import RecommendationForm from './pages/RecommendationForm';
 import About from './pages/About';
 import Allcows from './pages/Allcows';
+import Main from './pages/Main';
 import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
@@ -19,6 +20,8 @@ function App() {
             <Route path="/form" element={<RecommendationForm />} />
             <Route path="/about" element={<About />} />
             <Route path="/allcows" element={<Allcows />} />
+            <Route path="/Main/:cowId" element={<Main />} />
+
 
           </Routes>
         </main>
